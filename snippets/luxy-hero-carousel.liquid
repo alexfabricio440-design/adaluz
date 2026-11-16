@@ -1,0 +1,261 @@
+{% comment %}
+  CARRUSEL LUXY - HORIZON
+  Imágenes cargadas desde Shopify Files.
+  Se mueve automáticamente cada 3 segundos hacia la izquierda.
+  Corregido para que en PC no recorte la imagen.
+{% endcomment %}
+
+{% assign luxy_slide_1 = 'https://cdn.shopify.com/s/files/1/0677/3257/0171/files/ChatGPT_Image_24_may_2026_08_48_56_a.m._1.png?v=1779623655' %}
+{% assign luxy_slide_2 = 'https://cdn.shopify.com/s/files/1/0677/3257/0171/files/ChatGPT_Image_24_may_2026_08_48_56_a.m._2.png?v=1779623661' %}
+{% assign luxy_slide_3 = 'https://cdn.shopify.com/s/files/1/0677/3257/0171/files/ChatGPT_Image_24_may_2026_08_48_57_a.m._3.png?v=1779623670' %}
+{% assign luxy_slide_4 = 'https://cdn.shopify.com/s/files/1/0677/3257/0171/files/ChatGPT_Image_24_may_2026_08_49_02_a.m._4.png?v=1779623670' %}
+
+{% assign luxy_link_1 = '/collections/all' %}
+{% assign luxy_link_2 = '/collections/all' %}
+{% assign luxy_link_3 = '/collections/all' %}
+{% assign luxy_link_4 = '/collections/all' %}
+
+<div id="luxy-hero-carousel">
+  <div class="luxy-hero-carousel__viewport">
+    <div class="luxy-hero-carousel__track">
+
+      <a class="luxy-hero-carousel__slide" href="{{ luxy_link_1 }}">
+        <img src="{{ luxy_slide_1 }}" alt="Nueva colección" loading="eager">
+      </a>
+
+      <a class="luxy-hero-carousel__slide" href="{{ luxy_link_2 }}">
+        <img src="{{ luxy_slide_2 }}" alt="Ofertas del mes" loading="lazy">
+      </a>
+
+      <a class="luxy-hero-carousel__slide" href="{{ luxy_link_3 }}">
+        <img src="{{ luxy_slide_3 }}" alt="Día de la Madre" loading="lazy">
+      </a>
+
+      <a class="luxy-hero-carousel__slide" href="{{ luxy_link_4 }}">
+        <img src="{{ luxy_slide_4 }}" alt="Oferta especial 50% OFF" loading="lazy">
+      </a>
+
+    </div>
+  </div>
+
+  <div class="luxy-hero-carousel__dots">
+    <button type="button" class="active" aria-label="Ver imagen 1"></button>
+    <button type="button" aria-label="Ver imagen 2"></button>
+    <button type="button" aria-label="Ver imagen 3"></button>
+    <button type="button" aria-label="Ver imagen 4"></button>
+  </div>
+</div>
+
+<style>
+  #luxy-hero-carousel {
+    width: 100%;
+    padding: 8px 8px 8px;
+    background: #ffffff;
+    box-sizing: border-box;
+  }
+
+  #luxy-hero-carousel * {
+    box-sizing: border-box;
+  }
+
+  #luxy-hero-carousel .luxy-hero-carousel__viewport {
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 20px;
+    background: #f5f3ef;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.09);
+  }
+
+  #luxy-hero-carousel .luxy-hero-carousel__track {
+    display: flex;
+    width: 100%;
+    transition: transform 0.65s ease;
+    will-change: transform;
+  }
+
+  #luxy-hero-carousel .luxy-hero-carousel__slide {
+    min-width: 100%;
+    width: 100%;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    background: #f5f3ef;
+  }
+
+  #luxy-hero-carousel .luxy-hero-carousel__slide img {
+    width: 100%;
+    height: auto;
+    display: block;
+    aspect-ratio: 3 / 2;
+    object-fit: contain;
+    object-position: center;
+    border-radius: 20px;
+    user-select: none;
+    -webkit-user-drag: none;
+    background: #f5f3ef;
+  }
+
+  #luxy-hero-carousel .luxy-hero-carousel__dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    margin-top: 10px;
+  }
+
+  #luxy-hero-carousel .luxy-hero-carousel__dots button {
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    border: 0;
+    padding: 0;
+    background: rgba(169, 143, 88, 0.35);
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+
+  #luxy-hero-carousel .luxy-hero-carousel__dots button.active {
+    width: 22px;
+    background: #a98f58;
+  }
+
+  @media screen and (min-width: 750px) {
+    #luxy-hero-carousel {
+      padding: 14px 24px 12px;
+    }
+
+    #luxy-hero-carousel .luxy-hero-carousel__viewport {
+      max-width: 1180px;
+      border-radius: 24px;
+    }
+
+    #luxy-hero-carousel .luxy-hero-carousel__slide img {
+      aspect-ratio: 3 / 2;
+      object-fit: contain;
+      border-radius: 24px;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    #luxy-hero-carousel {
+      padding: 8px 8px 6px;
+    }
+
+    #luxy-hero-carousel .luxy-hero-carousel__viewport {
+      border-radius: 18px;
+    }
+
+    #luxy-hero-carousel .luxy-hero-carousel__slide img {
+      border-radius: 18px;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    function initLuxyHeroCarousel() {
+      var carousel = document.getElementById('luxy-hero-carousel');
+      if (!carousel) return;
+
+      var track = carousel.querySelector('.luxy-hero-carousel__track');
+      var slides = carousel.querySelectorAll('.luxy-hero-carousel__slide');
+      var dots = carousel.querySelectorAll('.luxy-hero-carousel__dots button');
+
+      if (!track || slides.length === 0) return;
+
+      if (carousel.dataset.initialized === 'true') return;
+      carousel.dataset.initialized = 'true';
+
+      var currentIndex = 0;
+      var totalSlides = slides.length;
+      var intervalTime = 3000;
+      var autoplay = null;
+
+      function goToSlide(index) {
+        if (index >= totalSlides) {
+          currentIndex = 0;
+        } else if (index < 0) {
+          currentIndex = totalSlides - 1;
+        } else {
+          currentIndex = index;
+        }
+
+        track.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
+
+        dots.forEach(function (dot) {
+          dot.classList.remove('active');
+        });
+
+        if (dots[currentIndex]) {
+          dots[currentIndex].classList.add('active');
+        }
+      }
+
+      function nextSlide() {
+        goToSlide(currentIndex + 1);
+      }
+
+      function startAutoplay() {
+        stopAutoplay();
+        autoplay = setInterval(nextSlide, intervalTime);
+      }
+
+      function stopAutoplay() {
+        if (autoplay) {
+          clearInterval(autoplay);
+          autoplay = null;
+        }
+      }
+
+      dots.forEach(function (dot, index) {
+        dot.addEventListener('click', function () {
+          goToSlide(index);
+          startAutoplay();
+        });
+      });
+
+      var startX = 0;
+      var endX = 0;
+
+      carousel.addEventListener('touchstart', function (event) {
+        startX = event.touches[0].clientX;
+        endX = startX;
+        stopAutoplay();
+      }, { passive: true });
+
+      carousel.addEventListener('touchmove', function (event) {
+        endX = event.touches[0].clientX;
+      }, { passive: true });
+
+      carousel.addEventListener('touchend', function () {
+        var difference = startX - endX;
+
+        if (Math.abs(difference) > 45) {
+          if (difference > 0) {
+            goToSlide(currentIndex + 1);
+          } else {
+            goToSlide(currentIndex - 1);
+          }
+        }
+
+        startAutoplay();
+      });
+
+      carousel.addEventListener('mouseenter', stopAutoplay);
+      carousel.addEventListener('mouseleave', startAutoplay);
+
+      goToSlide(0);
+      startAutoplay();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initLuxyHeroCarousel);
+    } else {
+      initLuxyHeroCarousel();
+    }
+
+    document.addEventListener('shopify:section:load', initLuxyHeroCarousel);
+  })();
+</script>

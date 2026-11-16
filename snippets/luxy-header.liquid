@@ -1,0 +1,337 @@
+{% comment %}
+  ENCABEZADO LUXY - CÓDIGO PURO LIQUID
+  Para pegar dentro del header/sección Liquid del tema Horizon.
+  No usa schema. No depende del editor visual.
+{% endcomment %}
+
+<div id="luxy-horizon-header">
+  <div class="luxy-header-wrap">
+
+    <div class="luxy-header-top">
+      <button type="button" class="luxy-menu-btn" aria-label="Abrir menú">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <a href="{{ routes.root_url }}" class="luxy-logo">
+        Luxy
+      </a>
+
+      <a href="{{ routes.cart_url }}" class="luxy-cart" aria-label="Carrito">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6.5 8.5H17.5L18.5 21H5.5L6.5 8.5Z"></path>
+          <path d="M9 8.5V6.5C9 4.84 10.34 3.5 12 3.5C13.66 3.5 15 4.84 15 6.5V8.5"></path>
+        </svg>
+
+        {% if cart.item_count > 0 %}
+          <span class="luxy-cart-count">{{ cart.item_count }}</span>
+        {% endif %}
+      </a>
+    </div>
+
+    <form action="{{ routes.search_url }}" method="get" role="search" class="luxy-search">
+      <button type="submit" aria-label="Buscar">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle>
+          <path d="M16.5 16.5L21 21"></path>
+        </svg>
+      </button>
+
+      <input
+        type="search"
+        name="q"
+        value="{{ search.terms | escape }}"
+        placeholder="Buscar productos..."
+        autocomplete="off"
+      >
+    </form>
+
+  </div>
+
+  <div class="luxy-menu-overlay"></div>
+
+  <aside class="luxy-side-menu">
+    <div class="luxy-side-head">
+      <strong>Menú</strong>
+      <button type="button" class="luxy-close-btn" aria-label="Cerrar menú">×</button>
+    </div>
+
+    <nav class="luxy-side-nav">
+      <a href="{{ routes.root_url }}">Inicio</a>
+      <a href="/collections/all">Catálogo</a>
+      <a href="/collections/all">Productos</a>
+      <a href="/collections/all?sort_by=created-descending">Nuevos</a>
+      <a href="/collections/all?sort_by=price-ascending">Ofertas</a>
+      <a href="{{ routes.cart_url }}">Carrito</a>
+    </nav>
+  </aside>
+</div>
+
+<style>
+  #luxy-horizon-header {
+    width: 100%;
+    background: #ffffff;
+    color: #111111;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    position: relative;
+    z-index: 100;
+  }
+
+  #luxy-horizon-header * {
+    box-sizing: border-box;
+  }
+
+  #luxy-horizon-header .luxy-header-wrap {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 14px 16px 16px;
+  }
+
+  #luxy-horizon-header .luxy-header-top {
+    display: grid;
+    grid-template-columns: 44px 1fr 44px;
+    align-items: center;
+    min-height: 48px;
+  }
+
+  #luxy-horizon-header .luxy-menu-btn {
+    width: 40px;
+    height: 40px;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+  }
+
+  #luxy-horizon-header .luxy-menu-btn span {
+    width: 24px;
+    height: 1.6px;
+    background: currentColor;
+    border-radius: 999px;
+    display: block;
+  }
+
+  #luxy-horizon-header .luxy-logo {
+    text-align: center;
+    text-decoration: none;
+    color: #a98f58;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 42px;
+    line-height: 1;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+
+  #luxy-horizon-header .luxy-cart {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    margin-left: auto;
+    color: inherit;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #luxy-horizon-header .luxy-cart svg {
+    width: 25px;
+    height: 25px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  #luxy-horizon-header .luxy-cart-count {
+    position: absolute;
+    top: 1px;
+    right: 0;
+    min-width: 19px;
+    height: 19px;
+    padding: 0 5px;
+    background: #a98f58;
+    color: #ffffff;
+    font-size: 11px;
+    line-height: 19px;
+    text-align: center;
+    border-radius: 999px;
+    font-weight: 700;
+  }
+
+  #luxy-horizon-header .luxy-search {
+    margin-top: 14px;
+    width: 100%;
+    min-height: 52px;
+    background: #f5f3ef;
+    border-radius: 999px;
+    padding: 0 17px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  #luxy-horizon-header .luxy-search button {
+    width: 26px;
+    height: 26px;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    color: #111111;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #luxy-horizon-header .luxy-search svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  #luxy-horizon-header .luxy-search input {
+    width: 100%;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: #111111;
+    font-size: 15px;
+  }
+
+  #luxy-horizon-header .luxy-search input::placeholder {
+    color: #8c8c8c;
+  }
+
+  #luxy-horizon-header .luxy-menu-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.25s ease;
+    z-index: 998;
+  }
+
+  #luxy-horizon-header .luxy-side-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 84%;
+    max-width: 340px;
+    height: 100vh;
+    background: #ffffff;
+    transform: translateX(-105%);
+    transition: 0.28s ease;
+    z-index: 999;
+    padding: 20px;
+    box-shadow: 16px 0 40px rgba(0, 0, 0, 0.18);
+  }
+
+  #luxy-horizon-header.luxy-open .luxy-menu-overlay {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  #luxy-horizon-header.luxy-open .luxy-side-menu {
+    transform: translateX(0);
+  }
+
+  #luxy-horizon-header .luxy-side-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #111111;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  #luxy-horizon-header .luxy-side-head strong {
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  #luxy-horizon-header .luxy-close-btn {
+    border: 0;
+    background: transparent;
+    color: #111111;
+    font-size: 34px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  #luxy-horizon-header .luxy-side-nav {
+    display: flex;
+    flex-direction: column;
+    padding-top: 12px;
+  }
+
+  #luxy-horizon-header .luxy-side-nav a {
+    color: #111111;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  @media screen and (min-width: 750px) {
+    #luxy-horizon-header .luxy-header-wrap {
+      padding: 18px 30px 20px;
+    }
+
+    #luxy-horizon-header .luxy-search {
+      max-width: 640px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    function initLuxyHeader() {
+      var header = document.getElementById('luxy-horizon-header');
+      if (!header) return;
+
+      var openBtn = header.querySelector('.luxy-menu-btn');
+      var closeBtn = header.querySelector('.luxy-close-btn');
+      var overlay = header.querySelector('.luxy-menu-overlay');
+
+      if (!openBtn || !closeBtn || !overlay) return;
+
+      openBtn.addEventListener('click', function () {
+        header.classList.add('luxy-open');
+        document.body.style.overflow = 'hidden';
+      });
+
+      closeBtn.addEventListener('click', function () {
+        header.classList.remove('luxy-open');
+        document.body.style.overflow = '';
+      });
+
+      overlay.addEventListener('click', function () {
+        header.classList.remove('luxy-open');
+        document.body.style.overflow = '';
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initLuxyHeader);
+    } else {
+      initLuxyHeader();
+    }
+  })();
+</script>

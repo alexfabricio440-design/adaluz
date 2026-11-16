@@ -1,0 +1,348 @@
+{% comment %}
+  PRODUCTOS DESTACADOS LUXY - HORIZON
+  Código puro Liquid + CSS.
+  Muestra productos desde la colección "all".
+{% endcomment %}
+
+{% assign luxy_featured_collection = collections['all'] %}
+
+<div id="luxy-featured-products">
+  <div class="luxy-featured-head">
+    <h2>DESTACADOS</h2>
+    <a href="/collections/all">Ver todo</a>
+  </div>
+
+  <div class="luxy-featured-scroll">
+    {% if luxy_featured_collection != blank and luxy_featured_collection.products.size > 0 %}
+      {% for product in luxy_featured_collection.products limit: 6 %}
+        <div class="luxy-product-card">
+
+          <a href="{{ product.url }}" class="luxy-product-image-wrap">
+            {% if product.featured_image != blank %}
+              <img
+                src="{{ product.featured_image | image_url: width: 600 }}"
+                alt="{{ product.title | escape }}"
+                loading="lazy"
+                width="600"
+                height="800"
+              >
+            {% else %}
+              <div class="luxy-product-placeholder">
+                Producto
+              </div>
+            {% endif %}
+
+            <button type="button" class="luxy-heart-btn" aria-label="Agregar a favoritos">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20.8 4.9C18.9 3 15.8 3 13.9 4.9L12 6.8L10.1 4.9C8.2 3 5.1 3 3.2 4.9C1.3 6.8 1.3 9.9 3.2 11.8L12 20.6L20.8 11.8C22.7 9.9 22.7 6.8 20.8 4.9Z"></path>
+              </svg>
+            </button>
+          </a>
+
+          <div class="luxy-product-info">
+            <a href="{{ product.url }}" class="luxy-product-title">
+              {{ product.title }}
+            </a>
+
+            <div class="luxy-product-price">
+              {% if product.compare_at_price > product.price %}
+                <span class="luxy-price-current">{{ product.price | money }}</span>
+                <span class="luxy-price-old">{{ product.compare_at_price | money }}</span>
+              {% else %}
+                <span class="luxy-price-current">{{ product.price | money }}</span>
+              {% endif %}
+            </div>
+
+            <a href="{{ product.url }}" class="luxy-product-btn">
+              VER PRODUCTO
+            </a>
+          </div>
+
+        </div>
+      {% endfor %}
+    {% else %}
+      <div class="luxy-empty-products">
+        Agregá productos a tu tienda para mostrar destacados.
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<style>
+  #luxy-featured-products {
+    width: 100%;
+    background: #ffffff;
+    padding: 12px 14px 22px;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  #luxy-featured-products * {
+    box-sizing: border-box;
+  }
+
+  #luxy-featured-products .luxy-featured-head {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  #luxy-featured-products .luxy-featured-head h2 {
+    margin: 0;
+    color: #111111;
+    font-size: 15px;
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+
+  #luxy-featured-products .luxy-featured-head a {
+    color: #a98f58;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  #luxy-featured-products .luxy-featured-scroll {
+    width: auto;
+    max-width: 1200px;
+    margin: 0 -14px 0 auto;
+    display: flex;
+    gap: 13px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 6px;
+    padding-right: 14px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #luxy-featured-products .luxy-featured-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  #luxy-featured-products .luxy-product-card {
+    flex: 0 0 43%;
+    min-width: 150px;
+    max-width: 210px;
+    background: #ffffff;
+    border-radius: 18px;
+    overflow: hidden;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #luxy-featured-products .luxy-product-image-wrap {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    background: #f5f3ef;
+    border-radius: 18px;
+    overflow: hidden;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  #luxy-featured-products .luxy-product-image-wrap img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.35s ease;
+  }
+
+  #luxy-featured-products .luxy-product-card:hover .luxy-product-image-wrap img {
+    transform: scale(1.035);
+  }
+
+  #luxy-featured-products .luxy-heart-btn {
+    position: absolute;
+    top: 9px;
+    right: 9px;
+    width: 32px;
+    height: 32px;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.88);
+    color: #111111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    cursor: pointer;
+    box-shadow: 0 7px 18px rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(8px);
+  }
+
+  #luxy-featured-products .luxy-heart-btn svg {
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  #luxy-featured-products .luxy-product-info {
+    padding: 9px 2px 0;
+    min-height: 118px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #luxy-featured-products .luxy-product-title {
+    color: #111111;
+    text-decoration: none;
+    font-size: 13px;
+    line-height: 1.25;
+    font-weight: 600;
+    margin-bottom: 5px;
+    min-height: 33px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  #luxy-featured-products .luxy-product-price {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 9px;
+    flex-wrap: wrap;
+    min-height: 18px;
+  }
+
+  #luxy-featured-products .luxy-price-current {
+    color: #a98f58;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  #luxy-featured-products .luxy-price-old {
+    color: #999999;
+    font-size: 12px;
+    text-decoration: line-through;
+  }
+
+  #luxy-featured-products .luxy-product-btn {
+    width: 100%;
+    min-height: 34px;
+    border-radius: 999px;
+    border: 1px solid rgba(169, 143, 88, 0.55);
+    color: #a98f58;
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 10px;
+    transition: all 0.25s ease;
+    margin-top: auto;
+  }
+
+  #luxy-featured-products .luxy-product-btn:hover {
+    background: #a98f58;
+    color: #ffffff;
+  }
+
+  #luxy-featured-products .luxy-product-placeholder {
+    width: 100%;
+    height: 100%;
+    background: #f5f3ef;
+    color: #a98f58;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #luxy-featured-products .luxy-empty-products {
+    width: 100%;
+    background: #f5f3ef;
+    color: #555555;
+    border-radius: 16px;
+    padding: 18px;
+    text-align: center;
+    font-size: 14px;
+  }
+
+  @media screen and (max-width: 380px) {
+    #luxy-featured-products {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
+    #luxy-featured-products .luxy-featured-scroll {
+      margin-right: -10px;
+      padding-right: 10px;
+    }
+
+    #luxy-featured-products .luxy-product-card {
+      flex-basis: 43%;
+      min-width: 150px;
+    }
+
+    #luxy-featured-products .luxy-product-title {
+      font-size: 12.5px;
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    #luxy-featured-products {
+      padding: 18px 24px 32px;
+      overflow: visible;
+    }
+
+    #luxy-featured-products .luxy-featured-head {
+      margin-bottom: 16px;
+    }
+
+    #luxy-featured-products .luxy-featured-head h2 {
+      font-size: 17px;
+    }
+
+    #luxy-featured-products .luxy-featured-head a {
+      font-size: 14px;
+    }
+
+    #luxy-featured-products .luxy-featured-scroll {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      overflow: visible;
+      margin: 0 auto;
+      padding-right: 0;
+    }
+
+    #luxy-featured-products .luxy-product-card {
+      flex: unset;
+      min-width: 0;
+      max-width: none;
+    }
+
+    #luxy-featured-products .luxy-product-info {
+      min-height: 124px;
+    }
+
+    #luxy-featured-products .luxy-product-title {
+      font-size: 14px;
+      min-height: 35px;
+    }
+
+    #luxy-featured-products .luxy-price-current {
+      font-size: 14px;
+    }
+  }
+</style>
