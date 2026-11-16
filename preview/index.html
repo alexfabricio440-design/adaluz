@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Luxy – Vista previa de la tienda</title>
+<style>body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#fff}
+.note{background:#f5f3ef;color:#555;font-size:12px;text-align:center;padding:6px 10px}
+
+  #luxy-horizon-header {
+    width: 100%;
+    background: #ffffff;
+    color: #111111;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    position: relative;
+    z-index: 100;
+  }
+
+  #luxy-horizon-header * {
+    box-sizing: border-box;
+  }
+
+  #luxy-horizon-header .luxy-header-wrap {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 14px 16px 16px;
+  }
+
+  #luxy-horizon-header .luxy-header-top {
+    display: grid;
+    grid-template-columns: 44px 1fr 44px;
+    align-items: center;
+    min-height: 48px;
+  }
+
+  #luxy-horizon-header .luxy-menu-btn {
+    width: 40px;
+    height: 40px;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+  }
+
+  #luxy-horizon-header .luxy-menu-btn span {
+    width: 24px;
+    height: 1.6px;
+    background: currentColor;
+    border-radius: 999px;
+    display: block;
+  }
+
+  #luxy-horizon-header .luxy-logo {
+    text-align: center;
+    text-decoration: none;
+    color: #a98f58;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 42px;
+    line-height: 1;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+
+  #luxy-horizon-header .luxy-cart {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    margin-left: auto;
+    color: inherit;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #luxy-horizon-header .luxy-cart svg {
+    width: 25px;
+    height: 25px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  #luxy-horizon-header .luxy-cart-count {
+    position: absolute;
+    top: 1px;
+    right: 0;
+    min-width: 19px;
+    height: 19px;
+    padding: 0 5px;
+    background: #a98f58;
+    color: #ffffff;
+    font-size: 11px;
+    line-height: 19px;
+    text-align: center;
+    border-radius: 999px;
+    font-weight: 700;
+  }
+
+  #luxy-horizon-header .luxy-search {
+    margin-top: 14px;
+    width: 100%;
+    min-height: 52px;
+    background: #f5f3ef;
+    border-radius: 999px;
+    padding: 0 17px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  #luxy-horizon-header .luxy-search button {
+    width: 26px;
+    height: 26px;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    color: #111111;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #luxy-horizon-header .luxy-search svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  #luxy-horizon-header .luxy-search input {
+    width: 100%;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: #111111;
+    font-size: 15px;
+  }
+
+  #luxy-horizon-header .luxy-search input::placeholder {
+    color: #8c8c8c;
+  }
+
+  #luxy-horizon-header .luxy-menu-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.25s ease;
+    z-index: 998;
+  }
+
+  #luxy-horizon-header .luxy-side-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 84%;
+    max-width: 340px;
+    height: 100vh;
+    background: #ffffff;
+    transform: translateX(-105%);
+    transition: 0.28s ease;
+    z-index: 999;
+    padding: 20px;
+    box-shadow: 16px 0 40px rgba(0, 0, 0, 0.18);
+  }
+
+  #luxy-horizon-header.luxy-open .luxy-menu-overlay {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  #luxy-horizon-header.luxy-open .luxy-side-menu {
+    transform: translateX(0);
+  }
+
+  #luxy-horizon-header .luxy-side-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #111111;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  #luxy-horizon-header .luxy-side-head strong {
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  #luxy-horizon-header .luxy-close-btn {
+    border: 0;
+    background: transparent;
+    color: #111111;
+    font-size: 34px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  #luxy-horizon-header .luxy-side-nav {
+    display: flex;
+    flex-direction: column;
+    padding-top: 12px;
+  }
+
+  #luxy-horizon-header .luxy-side-nav a {
+    color: #111111;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  @media screen and (min-width: 750px) {
+    #luxy-horizon-header .luxy-header-wrap {
+      padding: 18px 30px 20px;
+    }
+
+    #luxy-horizon-header .luxy-search {
+      max-width: 640px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+
+  body {
+    padding-bottom: 92px;
+  }
+
+  #luxy-premium-bottom-nav {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 12px;
+    z-index: 900;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+    padding: 0 12px;
+  }
+
+  #luxy-premium-bottom-nav * {
+    box-sizing: border-box;
+  }
+
+  #luxy-premium-bottom-nav .luxy-bottom-shell {
+    width: 100%;
+    max-width: 430px;
+    min-height: 72px;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(169, 143, 88, 0.20);
+    border-radius: 999px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: center;
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.14);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    pointer-events: auto;
+    padding: 7px 8px;
+  }
+
+  #luxy-premium-bottom-nav .luxy-bottom-link {
+    height: 58px;
+    border: 0;
+    background: transparent;
+    color: #333333;
+    text-decoration: none;
+    font-family: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    padding: 0;
+    position: relative;
+    border-radius: 999px;
+    transition: all 0.22s ease;
+  }
+
+  #luxy-premium-bottom-nav .luxy-bottom-link span:last-child {
+    font-size: 10.8px;
+    line-height: 1;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  #luxy-premium-bottom-nav .luxy-icon-wrap {
+    width: 26px;
+    height: 26px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #luxy-premium-bottom-nav svg {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.65;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  #luxy-premium-bottom-nav .luxy-active {
+    color: #a98f58;
+    background: rgba(169, 143, 88, 0.10);
+  }
+
+  #luxy-premium-bottom-nav .luxy-main-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #b69a61, #8f7441);
+    color: #ffffff;
+    box-shadow: 0 8px 20px rgba(169, 143, 88, 0.35);
+  }
+
+  #luxy-premium-bottom-nav .luxy-main-icon svg {
+    width: 20px;
+    height: 20px;
+    stroke-width: 1.8;
+  }
+
+  #luxy-premium-bottom-nav em {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 999px;
+    background: #a98f58;
+    color: #ffffff;
+    font-size: 10px;
+    line-height: 18px;
+    text-align: center;
+    font-style: normal;
+    font-weight: 800;
+    box-shadow: 0 4px 10px rgba(169, 143, 88, 0.35);
+  }
+
+  #luxy-premium-bottom-nav .luxy-bottom-link:active {
+    transform: scale(0.94);
+  }
+
+  #luxy-category-popup,
+  #luxy-favorites-popup {
+    position: fixed;
+    inset: 0;
+    z-index: 950;
+    background: rgba(0, 0, 0, 0.38);
+    display: none;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 16px;
+  }
+
+  #luxy-category-popup.luxy-show,
+  #luxy-favorites-popup.luxy-show {
+    display: flex;
+  }
+
+  .luxy-category-card {
+    width: 100%;
+    max-width: 430px;
+    background: #ffffff;
+    border-radius: 28px;
+    padding: 22px 18px 20px;
+    position: relative;
+    box-shadow: 0 -12px 45px rgba(0, 0, 0, 0.20);
+    animation: luxyPopupUp 0.25s ease;
+  }
+
+  @keyframes luxyPopupUp {
+    from {
+      transform: translateY(18px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .luxy-popup-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    border: 0;
+    background: transparent;
+    color: #111111;
+    font-size: 30px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .luxy-popup-mini-title {
+    display: block;
+    color: #a98f58;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+
+  .luxy-category-card h3 {
+    margin: 0 0 16px;
+    color: #111111;
+    font-size: 23px;
+    line-height: 1.1;
+    font-weight: 750;
+    letter-spacing: -0.03em;
+  }
+
+  .luxy-popup-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .luxy-popup-grid a {
+    min-height: 86px;
+    border-radius: 20px;
+    background: #f5f3ef;
+    border: 1px solid rgba(169, 143, 88, 0.16);
+    color: #111111;
+    text-decoration: none;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    transition: all 0.22s ease;
+  }
+
+  .luxy-popup-grid a span {
+    font-size: 15px;
+    font-weight: 750;
+    margin-bottom: 3px;
+  }
+
+  .luxy-popup-grid a small {
+    color: #777777;
+    font-size: 11.5px;
+    line-height: 1.2;
+  }
+
+  .luxy-popup-grid a:active {
+    transform: scale(0.97);
+  }
+
+  .luxy-popup-grid a:hover {
+    background: #eee8dc;
+  }
+
+  .luxy-popup-text {
+    margin: 0 0 16px;
+    color: #555555;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .luxy-popup-main-btn {
+    width: 100%;
+    min-height: 46px;
+    border-radius: 999px;
+    background: #a98f58;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media screen and (min-width: 750px) {
+    body {
+      padding-bottom: 0;
+    }
+
+    #luxy-premium-bottom-nav {
+      display: none;
+    }
+
+    #luxy-category-popup,
+    #luxy-favorites-popup {
+      display: none !important;
+    }
+  }
+
+
+  #luxy-hero-carousel {
+    width: 100%;
+    padding: 8px 8px 8px;
+    background: #ffffff;
+    box-sizing: border-box;
+  }
+
+  #luxy-hero-carousel * {
+    box-sizing: border-box;
+  }
+
+  #luxy-hero-carousel .luxy-hero-carousel__viewport {
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 20px;
+    background: #f5f3ef;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.09);
+  }
+
+  #luxy-hero-carousel .luxy-hero-carousel__track {
+    display: flex;
+    width: 100%;
+    transition: transform 0.65s ease;
+    will-change: transform;
+  }
+
+  #luxy-hero-carousel .luxy-hero-carousel__slide {
+    min-width: 100%;
+    width: 100%;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    background: #f5f3ef;
+  }
+
+  #luxy-hero-carousel .luxy-hero-carousel__slide img {
+    width: 100%;
+    height: auto;
+    display: block;
+    aspect-ratio: 3 / 2;
+    object-fit: contain;
+    object-position: center;
+    border-radius: 20px;
+    user-select: none;
+    -webkit-user-drag: none;
+    background: #f5f3ef;
+  }
+
+  #luxy-hero-carousel .luxy-hero-carousel__dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    margin-top: 10px;
+  }
+
+  #luxy-hero-carousel .luxy-hero-carousel__dots button {
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    border: 0;
+    padding: 0;
+    background: rgba(169, 143, 88, 0.35);
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+
+  #luxy-hero-carousel .luxy-hero-carousel__dots button.active {
+    width: 22px;
+    background: #a98f58;
+  }
+
+  @media screen and (min-width: 750px) {
+    #luxy-hero-carousel {
+      padding: 14px 24px 12px;
+    }
+
+    #luxy-hero-carousel .luxy-hero-carousel__viewport {
+      max-width: 1180px;
+      border-radius: 24px;
+    }
+
+    #luxy-hero-carousel .luxy-hero-carousel__slide img {
+      aspect-ratio: 3 / 2;
+      object-fit: contain;
+      border-radius: 24px;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    #luxy-hero-carousel {
+      padding: 8px 8px 6px;
+    }
+
+    #luxy-hero-carousel .luxy-hero-carousel__viewport {
+      border-radius: 18px;
+    }
+
+    #luxy-hero-carousel .luxy-hero-carousel__slide img {
+      border-radius: 18px;
+    }
+  }
+
+
+  #luxy-featured-products {
+    width: 100%;
+    background: #ffffff;
+    padding: 12px 14px 22px;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  #luxy-featured-products * {
+    box-sizing: border-box;
+  }
+
+  #luxy-featured-products .luxy-featured-head {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  #luxy-featured-products .luxy-featured-head h2 {
+    margin: 0;
+    color: #111111;
+    font-size: 15px;
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+
+  #luxy-featured-products .luxy-featured-head a {
+    color: #a98f58;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  #luxy-featured-products .luxy-featured-scroll {
+    width: auto;
+    max-width: 1200px;
+    margin: 0 -14px 0 auto;
+    display: flex;
+    gap: 13px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 6px;
+    padding-right: 14px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #luxy-featured-products .luxy-featured-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  #luxy-featured-products .luxy-product-card {
+    flex: 0 0 43%;
+    min-width: 150px;
+    max-width: 210px;
+    background: #ffffff;
+    border-radius: 18px;
+    overflow: hidden;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #luxy-featured-products .luxy-product-image-wrap {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    background: #f5f3ef;
+    border-radius: 18px;
+    overflow: hidden;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  #luxy-featured-products .luxy-product-image-wrap img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.35s ease;
+  }
+
+  #luxy-featured-products .luxy-product-card:hover .luxy-product-image-wrap img {
+    transform: scale(1.035);
+  }
+
+  #luxy-featured-products .luxy-heart-btn {
+    position: absolute;
+    top: 9px;
+    right: 9px;
+    width: 32px;
+    height: 32px;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.88);
+    color: #111111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    cursor: pointer;
+    box-shadow: 0 7px 18px rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(8px);
+  }
+
+  #luxy-featured-products .luxy-heart-btn svg {
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  #luxy-featured-products .luxy-product-info {
+    padding: 9px 2px 0;
+    min-height: 118px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #luxy-featured-products .luxy-product-title {
+    color: #111111;
+    text-decoration: none;
+    font-size: 13px;
+    line-height: 1.25;
+    font-weight: 600;
+    margin-bottom: 5px;
+    min-height: 33px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  #luxy-featured-products .luxy-product-price {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 9px;
+    flex-wrap: wrap;
+    min-height: 18px;
+  }
+
+  #luxy-featured-products .luxy-price-current {
+    color: #a98f58;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  #luxy-featured-products .luxy-price-old {
+    color: #999999;
+    font-size: 12px;
+    text-decoration: line-through;
+  }
+
+  #luxy-featured-products .luxy-product-btn {
+    width: 100%;
+    min-height: 34px;
+    border-radius: 999px;
+    border: 1px solid rgba(169, 143, 88, 0.55);
+    color: #a98f58;
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 10px;
+    transition: all 0.25s ease;
+    margin-top: auto;
+  }
+
+  #luxy-featured-products .luxy-product-btn:hover {
+    background: #a98f58;
+    color: #ffffff;
+  }
+
+  #luxy-featured-products .luxy-product-placeholder {
+    width: 100%;
+    height: 100%;
+    background: #f5f3ef;
+    color: #a98f58;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #luxy-featured-products .luxy-empty-products {
+    width: 100%;
+    background: #f5f3ef;
+    color: #555555;
+    border-radius: 16px;
+    padding: 18px;
+    text-align: center;
+    font-size: 14px;
+  }
+
+  @media screen and (max-width: 380px) {
+    #luxy-featured-products {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
+    #luxy-featured-products .luxy-featured-scroll {
+      margin-right: -10px;
+      padding-right: 10px;
+    }
+
+    #luxy-featured-products .luxy-product-card {
+      flex-basis: 43%;
+      min-width: 150px;
+    }
+
+    #luxy-featured-products .luxy-product-title {
+      font-size: 12.5px;
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    #luxy-featured-products {
+      padding: 18px 24px 32px;
+      overflow: visible;
+    }
+
+    #luxy-featured-products .luxy-featured-head {
+      margin-bottom: 16px;
+    }
+
+    #luxy-featured-products .luxy-featured-head h2 {
+      font-size: 17px;
+    }
+
+    #luxy-featured-products .luxy-featured-head a {
+      font-size: 14px;
+    }
+
+    #luxy-featured-products .luxy-featured-scroll {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      overflow: visible;
+      margin: 0 auto;
+      padding-right: 0;
+    }
+
+    #luxy-featured-products .luxy-product-card {
+      flex: unset;
+      min-width: 0;
+      max-width: none;
+    }
+
+    #luxy-featured-products .luxy-product-info {
+      min-height: 124px;
+    }
+
+    #luxy-featured-products .luxy-product-title {
+      font-size: 14px;
+      min-height: 35px;
+    }
+
+    #luxy-featured-products .luxy-price-current {
+      font-size: 14px;
+    }
+  }
+</style></head><body>
+<div class="note">Vista previa con datos de ejemplo — en Shopify se usan tus productos e imágenes reales</div>
+
+
+<div id="luxy-horizon-header">
+  <div class="luxy-header-wrap">
+
+    <div class="luxy-header-top">
+      <button type="button" class="luxy-menu-btn" aria-label="Abrir menú">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <a href="#" class="luxy-logo">
+        Luxy
+      </a>
+
+      <a href="#" class="luxy-cart" aria-label="Carrito">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6.5 8.5H17.5L18.5 21H5.5L6.5 8.5Z"></path>
+          <path d="M9 8.5V6.5C9 4.84 10.34 3.5 12 3.5C13.66 3.5 15 4.84 15 6.5V8.5"></path>
+        </svg>
+
+        
+          <span class="luxy-cart-count">2</span>
+        
+      </a>
+    </div>
+
+    <form action="#" method="get" role="search" class="luxy-search">
+      <button type="submit" aria-label="Buscar">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle>
+          <path d="M16.5 16.5L21 21"></path>
+        </svg>
+      </button>
+
+      <input
+        type="search"
+        name="q"
+        value=""
+        placeholder="Buscar productos..."
+        autocomplete="off"
+      >
+    </form>
+
+  </div>
+
+  <div class="luxy-menu-overlay"></div>
+
+  <aside class="luxy-side-menu">
+    <div class="luxy-side-head">
+      <strong>Menú</strong>
+      <button type="button" class="luxy-close-btn" aria-label="Cerrar menú">×</button>
+    </div>
+
+    <nav class="luxy-side-nav">
+      <a href="#">Inicio</a>
+      <a href="#">Catálogo</a>
+      <a href="#">Productos</a>
+      <a href="#">Nuevos</a>
+      <a href="#">Ofertas</a>
+      <a href="#">Carrito</a>
+    </nav>
+  </aside>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="luxy-hero-carousel">
+  <div class="luxy-hero-carousel__viewport">
+    <div class="luxy-hero-carousel__track">
+
+      <a class="luxy-hero-carousel__slide" href="#">
+        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc5MDAnIGhlaWdodD0nNjAwJyB2aWV3Qm94PScwIDAgOTAwIDYwMCc+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSdnJyB4MT0nMCcgeTE9JzAnIHgyPScxJyB5Mj0nMSc+PHN0b3Agb2Zmc2V0PScwJyBzdG9wLWNvbG9yPScjYzliMjdjJy8+PHN0b3Agb2Zmc2V0PScxJyBzdG9wLWNvbG9yPScjN2E2MjMyJy8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9JzkwMCcgaGVpZ2h0PSc2MDAnIGZpbGw9J3VybCgjZyknLz48dGV4dCB4PSc0NTAnIHk9JzMxNScgZm9udC1mYW1pbHk9J0dlb3JnaWEsc2VyaWYnIGZvbnQtc2l6ZT0nNTQnIGZpbGw9JyNmZmYnIHRleHQtYW5jaG9yPSdtaWRkbGUnPk51ZXZhIGNvbGVjY2nDs248L3RleHQ+PC9zdmc+" alt="Nueva colección" loading="eager">
+      </a>
+
+      <a class="luxy-hero-carousel__slide" href="#">
+        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc5MDAnIGhlaWdodD0nNjAwJyB2aWV3Qm94PScwIDAgOTAwIDYwMCc+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSdnJyB4MT0nMCcgeTE9JzAnIHgyPScxJyB5Mj0nMSc+PHN0b3Agb2Zmc2V0PScwJyBzdG9wLWNvbG9yPScjZDhhN2EwJy8+PHN0b3Agb2Zmc2V0PScxJyBzdG9wLWNvbG9yPScjOGE0YTQ1Jy8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9JzkwMCcgaGVpZ2h0PSc2MDAnIGZpbGw9J3VybCgjZyknLz48dGV4dCB4PSc0NTAnIHk9JzMxNScgZm9udC1mYW1pbHk9J0dlb3JnaWEsc2VyaWYnIGZvbnQtc2l6ZT0nNTQnIGZpbGw9JyNmZmYnIHRleHQtYW5jaG9yPSdtaWRkbGUnPk9mZXJ0YXMgZGVsIG1lczwvdGV4dD48L3N2Zz4=" alt="Ofertas del mes" loading="lazy">
+      </a>
+
+      <a class="luxy-hero-carousel__slide" href="#">
+        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc5MDAnIGhlaWdodD0nNjAwJyB2aWV3Qm94PScwIDAgOTAwIDYwMCc+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSdnJyB4MT0nMCcgeTE9JzAnIHgyPScxJyB5Mj0nMSc+PHN0b3Agb2Zmc2V0PScwJyBzdG9wLWNvbG9yPScjYjhjNGIwJy8+PHN0b3Agb2Zmc2V0PScxJyBzdG9wLWNvbG9yPScjNTY2OTRmJy8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9JzkwMCcgaGVpZ2h0PSc2MDAnIGZpbGw9J3VybCgjZyknLz48dGV4dCB4PSc0NTAnIHk9JzMxNScgZm9udC1mYW1pbHk9J0dlb3JnaWEsc2VyaWYnIGZvbnQtc2l6ZT0nNTQnIGZpbGw9JyNmZmYnIHRleHQtYW5jaG9yPSdtaWRkbGUnPkTDrWEgZGUgbGEgTWFkcmU8L3RleHQ+PC9zdmc+" alt="Día de la Madre" loading="lazy">
+      </a>
+
+      <a class="luxy-hero-carousel__slide" href="#">
+        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc5MDAnIGhlaWdodD0nNjAwJyB2aWV3Qm94PScwIDAgOTAwIDYwMCc+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSdnJyB4MT0nMCcgeTE9JzAnIHgyPScxJyB5Mj0nMSc+PHN0b3Agb2Zmc2V0PScwJyBzdG9wLWNvbG9yPScjMmIyYjJiJy8+PHN0b3Agb2Zmc2V0PScxJyBzdG9wLWNvbG9yPScjYTk4ZjU4Jy8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9JzkwMCcgaGVpZ2h0PSc2MDAnIGZpbGw9J3VybCgjZyknLz48dGV4dCB4PSc0NTAnIHk9JzMxNScgZm9udC1mYW1pbHk9J0dlb3JnaWEsc2VyaWYnIGZvbnQtc2l6ZT0nNTQnIGZpbGw9JyNmZmYnIHRleHQtYW5jaG9yPSdtaWRkbGUnPjUwJSBPRkY8L3RleHQ+PC9zdmc+" alt="Oferta especial 50% OFF" loading="lazy">
+      </a>
+
+    </div>
+  </div>
+
+  <div class="luxy-hero-carousel__dots">
+    <button type="button" class="active" aria-label="Ver imagen 1"></button>
+    <button type="button" aria-label="Ver imagen 2"></button>
+    <button type="button" aria-label="Ver imagen 3"></button>
+    <button type="button" aria-label="Ver imagen 4"></button>
+  </div>
+</div>
+
+
+
+
+<div id="luxy-featured-products"><div class="luxy-featured-head"><h2>DESTACADOS</h2><a href="#">Ver todo</a></div><div class="luxy-featured-scroll">
+        <div class="luxy-product-card">
+
+          <a href="#" class="luxy-product-image-wrap">
+            
+              <img
+                src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc2MDAnIGhlaWdodD0nODAwJyB2aWV3Qm94PScwIDAgNjAwIDgwMCc+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSdnJyB4MT0nMCcgeTE9JzAnIHgyPScwJyB5Mj0nMSc+PHN0b3Agb2Zmc2V0PScwJyBzdG9wLWNvbG9yPScjZTdkOWMwJy8+PHN0b3Agb2Zmc2V0PScxJyBzdG9wLWNvbG9yPScjYjY5YTYxJy8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9JzYwMCcgaGVpZ2h0PSc4MDAnIGZpbGw9J3VybCgjZyknLz48L3N2Zz4="
+                alt="Vestido Aurora"
+                loading="lazy"
+                width="600"
+                height="800"
+              >
+            
+
+            <button type="button" class="luxy-heart-btn" aria-label="Agregar a favoritos">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20.8 4.9C18.9 3 15.8 3 13.9 4.9L12 6.8L10.1 4.9C8.2 3 5.1 3 3.2 4.9C1.3 6.8 1.3 9.9 3.2 11.8L12 20.6L20.8 11.8C22.7 9.9 22.7 6.8 20.8 4.9Z"></path>
+              </svg>
+            </button>
+          </a>
+
+          <div class="luxy-product-info">
+            <a href="#" class="luxy-product-title">
+              Vestido Aurora
+            </a>
+
+            <div class="luxy-product-price">
+              
+                <span class="luxy-price-current">$45.900</span>
+                <span class="luxy-price-old">$59.900</span>
+              
+            </div>
+
+            <a href="#" class="luxy-product-btn">
+              VER PRODUCTO
+            </a>
+          </div>
+
+        </div>
+      
+        <div class="luxy-product-card">
+
+          <a href="#" class="luxy-product-image-wrap">
+            
+              <img
+                src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc2MDAnIGhlaWdodD0nODAwJyB2aWV3Qm94PScwIDAgNjAwIDgwMCc+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSdnJyB4MT0nMCcgeTE9JzAnIHgyPScwJyB5Mj0nMSc+PHN0b3Agb2Zmc2V0PScwJyBzdG9wLWNvbG9yPScjZDlkMmM1Jy8+PHN0b3Agb2Zmc2V0PScxJyBzdG9wLWNvbG9yPScjOGQ4NTc2Jy8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9JzYwMCcgaGVpZ2h0PSc4MDAnIGZpbGw9J3VybCgjZyknLz48L3N2Zz4="
+                alt="Blazer Milán"
+                loading="lazy"
+                width="600"
+                height="800"
+              >
+            
+
+            <button type="button" class="luxy-heart-btn" aria-label="Agregar a favoritos">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20.8 4.9C18.9 3 15.8 3 13.9 4.9L12 6.8L10.1 4.9C8.2 3 5.1 3 3.2 4.9C1.3 6.8 1.3 9.9 3.2 11.8L12 20.6L20.8 11.8C22.7 9.9 22.7 6.8 20.8 4.9Z"></path>
+              </svg>
+            </button>
+          </a>
+
+          <div class="luxy-product-info">
+            <a href="#" class="luxy-product-title">
+              Blazer Milán
+            </a>
+
+            <div class="luxy-product-price">
+              
+                <span class="luxy-price-current">$78.500</span>
+              
+            </div>
+
+            <a href="#" class="luxy-product-btn">
+              VER PRODUCTO
+            </a>
+          </div>
+
+        </div>
+      
+        <div class="luxy-product-card">
+
+          <a href="#" class="luxy-product-image-wrap">
+            
+              <img
+                src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc2MDAnIGhlaWdodD0nODAwJyB2aWV3Qm94PScwIDAgNjAwIDgwMCc+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSdnJyB4MT0nMCcgeTE9JzAnIHgyPScwJyB5Mj0nMSc+PHN0b3Agb2Zmc2V0PScwJyBzdG9wLWNvbG9yPScjZTllNGQ4Jy8+PHN0b3Agb2Zmc2V0PScxJyBzdG9wLWNvbG9yPScjYmZhZTg2Jy8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9JzYwMCcgaGVpZ2h0PSc4MDAnIGZpbGw9J3VybCgjZyknLz48L3N2Zz4="
+                alt="Camisa Lino"
+                loading="lazy"
+                width="600"
+                height="800"
+              >
+            
+
+            <button type="button" class="luxy-heart-btn" aria-label="Agregar a favoritos">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20.8 4.9C18.9 3 15.8 3 13.9 4.9L12 6.8L10.1 4.9C8.2 3 5.1 3 3.2 4.9C1.3 6.8 1.3 9.9 3.2 11.8L12 20.6L20.8 11.8C22.7 9.9 22.7 6.8 20.8 4.9Z"></path>
+              </svg>
+            </button>
+          </a>
+
+          <div class="luxy-product-info">
+            <a href="#" class="luxy-product-title">
+              Camisa Lino
+            </a>
+
+            <div class="luxy-product-price">
+              
+                <span class="luxy-price-current">$32.000</span>
+                <span class="luxy-price-old">$39.000</span>
+              
+            </div>
+
+            <a href="#" class="luxy-product-btn">
+              VER PRODUCTO
+            </a>
+          </div>
+
+        </div>
+      
+        <div class="luxy-product-card">
+
+          <a href="#" class="luxy-product-image-wrap">
+            
+              <img
+                src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc2MDAnIGhlaWdodD0nODAwJyB2aWV3Qm94PScwIDAgNjAwIDgwMCc+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSdnJyB4MT0nMCcgeTE9JzAnIHgyPScwJyB5Mj0nMSc+PHN0b3Agb2Zmc2V0PScwJyBzdG9wLWNvbG9yPScjZWFkOGNmJy8+PHN0b3Agb2Zmc2V0PScxJyBzdG9wLWNvbG9yPScjYjA3ZjZhJy8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9JzYwMCcgaGVpZ2h0PSc4MDAnIGZpbGw9J3VybCgjZyknLz48L3N2Zz4="
+                alt="Cartera Dorada"
+                loading="lazy"
+                width="600"
+                height="800"
+              >
+            
+
+            <button type="button" class="luxy-heart-btn" aria-label="Agregar a favoritos">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20.8 4.9C18.9 3 15.8 3 13.9 4.9L12 6.8L10.1 4.9C8.2 3 5.1 3 3.2 4.9C1.3 6.8 1.3 9.9 3.2 11.8L12 20.6L20.8 11.8C22.7 9.9 22.7 6.8 20.8 4.9Z"></path>
+              </svg>
+            </button>
+          </a>
+
+          <div class="luxy-product-info">
+            <a href="#" class="luxy-product-title">
+              Cartera Dorada
+            </a>
+
+            <div class="luxy-product-price">
+              
+                <span class="luxy-price-current">$61.000</span>
+              
+            </div>
+
+            <a href="#" class="luxy-product-btn">
+              VER PRODUCTO
+            </a>
+          </div>
+
+        </div>
+      
+        <div class="luxy-product-card">
+
+          <a href="#" class="luxy-product-image-wrap">
+            
+              <img
+                src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc2MDAnIGhlaWdodD0nODAwJyB2aWV3Qm94PScwIDAgNjAwIDgwMCc+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSdnJyB4MT0nMCcgeTE9JzAnIHgyPScwJyB5Mj0nMSc+PHN0b3Agb2Zmc2V0PScwJyBzdG9wLWNvbG9yPScjY2ZkM2M4Jy8+PHN0b3Agb2Zmc2V0PScxJyBzdG9wLWNvbG9yPScjN2Y4YTczJy8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9JzYwMCcgaGVpZ2h0PSc4MDAnIGZpbGw9J3VybCgjZyknLz48L3N2Zz4="
+                alt="Pantalón Sastre"
+                loading="lazy"
+                width="600"
+                height="800"
+              >
+            
+
+            <button type="button" class="luxy-heart-btn" aria-label="Agregar a favoritos">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20.8 4.9C18.9 3 15.8 3 13.9 4.9L12 6.8L10.1 4.9C8.2 3 5.1 3 3.2 4.9C1.3 6.8 1.3 9.9 3.2 11.8L12 20.6L20.8 11.8C22.7 9.9 22.7 6.8 20.8 4.9Z"></path>
+              </svg>
+            </button>
+          </a>
+
+          <div class="luxy-product-info">
+            <a href="#" class="luxy-product-title">
+              Pantalón Sastre
+            </a>
+
+            <div class="luxy-product-price">
+              
+                <span class="luxy-price-current">$52.500</span>
+              
+            </div>
+
+            <a href="#" class="luxy-product-btn">
+              VER PRODUCTO
+            </a>
+          </div>
+
+        </div>
+      
+        <div class="luxy-product-card">
+
+          <a href="#" class="luxy-product-image-wrap">
+            
+              <img
+                src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc2MDAnIGhlaWdodD0nODAwJyB2aWV3Qm94PScwIDAgNjAwIDgwMCc+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSdnJyB4MT0nMCcgeTE9JzAnIHgyPScwJyB5Mj0nMSc+PHN0b3Agb2Zmc2V0PScwJyBzdG9wLWNvbG9yPScjZGNjOGEzJy8+PHN0b3Agb2Zmc2V0PScxJyBzdG9wLWNvbG9yPScjOWE3YjQ1Jy8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9JzYwMCcgaGVpZ2h0PSc4MDAnIGZpbGw9J3VybCgjZyknLz48L3N2Zz4="
+                alt="Abrigo Camel"
+                loading="lazy"
+                width="600"
+                height="800"
+              >
+            
+
+            <button type="button" class="luxy-heart-btn" aria-label="Agregar a favoritos">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20.8 4.9C18.9 3 15.8 3 13.9 4.9L12 6.8L10.1 4.9C8.2 3 5.1 3 3.2 4.9C1.3 6.8 1.3 9.9 3.2 11.8L12 20.6L20.8 11.8C22.7 9.9 22.7 6.8 20.8 4.9Z"></path>
+              </svg>
+            </button>
+          </a>
+
+          <div class="luxy-product-info">
+            <a href="#" class="luxy-product-title">
+              Abrigo Camel
+            </a>
+
+            <div class="luxy-product-price">
+              
+                <span class="luxy-price-current">$98.000</span>
+                <span class="luxy-price-old">$120.000</span>
+              
+            </div>
+
+            <a href="#" class="luxy-product-btn">
+              VER PRODUCTO
+            </a>
+          </div>
+
+        </div>
+      </div></div>
+
+
+<div id="luxy-premium-bottom-nav">
+  <div class="luxy-bottom-shell">
+
+    <a href="#" class="luxy-bottom-link luxy-active">
+      <span class="luxy-icon-wrap">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 10.5L12 4L20 10.5V20H15V14H9V20H4V10.5Z"></path>
+        </svg>
+      </span>
+      <span>Inicio</span>
+    </a>
+
+    <button type="button" class="luxy-bottom-link luxy-category-trigger">
+      <span class="luxy-icon-wrap luxy-main-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 4H10V10H4V4Z"></path>
+          <path d="M14 4H20V10H14V4Z"></path>
+          <path d="M4 14H10V20H4V14Z"></path>
+          <path d="M14 14H20V20H14V14Z"></path>
+        </svg>
+      </span>
+      <span>Categorías</span>
+    </button>
+
+    <button type="button" class="luxy-bottom-link luxy-favorites-trigger">
+      <span class="luxy-icon-wrap">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M20.8 4.9C18.9 3 15.8 3 13.9 4.9L12 6.8L10.1 4.9C8.2 3 5.1 3 3.2 4.9C1.3 6.8 1.3 9.9 3.2 11.8L12 20.6L20.8 11.8C22.7 9.9 22.7 6.8 20.8 4.9Z"></path>
+        </svg>
+      </span>
+      <span>Favoritos</span>
+    </button>
+
+    <a href="#" class="luxy-bottom-link">
+      <span class="luxy-icon-wrap">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6.5 8.5H17.5L18.5 21H5.5L6.5 8.5Z"></path>
+          <path d="M9 8.5V6.5C9 4.84 10.34 3.5 12 3.5C13.66 3.5 15 4.84 15 6.5V8.5"></path>
+        </svg>
+
+        
+          <em>2</em>
+        
+      </span>
+      <span>Carrito</span>
+    </a>
+
+  </div>
+</div>
+
+<div id="luxy-category-popup">
+  <div class="luxy-category-card">
+    <button type="button" class="luxy-popup-close" aria-label="Cerrar">×</button>
+
+    <span class="luxy-popup-mini-title">Explorar tienda</span>
+    <h3>Categorías</h3>
+
+    <div class="luxy-popup-grid">
+      <a href="#">
+        <span>Mujer</span>
+        <small>Elegancia diaria</small>
+      </a>
+
+      <a href="#">
+        <span>Hombre</span>
+        <small>Estilo limpio</small>
+      </a>
+
+      <a href="#">
+        <span>Nuevos</span>
+        <small>Últimos ingresos</small>
+      </a>
+
+      <a href="#">
+        <span>Ofertas</span>
+        <small>Precios especiales</small>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div id="luxy-favorites-popup">
+  <div class="luxy-category-card">
+    <button type="button" class="luxy-popup-close" aria-label="Cerrar">×</button>
+
+    <span class="luxy-popup-mini-title">Tus elegidos</span>
+    <h3>Favoritos</h3>
+
+    <p class="luxy-popup-text">
+      Guardá tus productos favoritos tocando el corazón en cada producto.
+    </p>
+
+    <a href="#" class="luxy-popup-main-btn">
+      Ver productos
+    </a>
+  </div>
+</div>
+
+
+
+
+<script>
+  (function () {
+    function initLuxyHeader() {
+      var header = document.getElementById('luxy-horizon-header');
+      if (!header) return;
+
+      var openBtn = header.querySelector('.luxy-menu-btn');
+      var closeBtn = header.querySelector('.luxy-close-btn');
+      var overlay = header.querySelector('.luxy-menu-overlay');
+
+      if (!openBtn || !closeBtn || !overlay) return;
+
+      openBtn.addEventListener('click', function () {
+        header.classList.add('luxy-open');
+        document.body.style.overflow = 'hidden';
+      });
+
+      closeBtn.addEventListener('click', function () {
+        header.classList.remove('luxy-open');
+        document.body.style.overflow = '';
+      });
+
+      overlay.addEventListener('click', function () {
+        header.classList.remove('luxy-open');
+        document.body.style.overflow = '';
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initLuxyHeader);
+    } else {
+      initLuxyHeader();
+    }
+  })();
+
+
+  (function () {
+    function initLuxyPremiumBottomNav() {
+      var nav = document.getElementById('luxy-premium-bottom-nav');
+      var categoryPopup = document.getElementById('luxy-category-popup');
+      var favoritesPopup = document.getElementById('luxy-favorites-popup');
+
+      if (!nav || !categoryPopup || !favoritesPopup) return;
+
+      if (nav.dataset.initialized === 'true') return;
+      nav.dataset.initialized = 'true';
+
+      var categoryTrigger = nav.querySelector('.luxy-category-trigger');
+      var favoritesTrigger = nav.querySelector('.luxy-favorites-trigger');
+
+      function openPopup(popup) {
+        popup.classList.add('luxy-show');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closePopup(popup) {
+        popup.classList.remove('luxy-show');
+        document.body.style.overflow = '';
+      }
+
+      if (categoryTrigger) {
+        categoryTrigger.addEventListener('click', function () {
+          openPopup(categoryPopup);
+        });
+      }
+
+      if (favoritesTrigger) {
+        favoritesTrigger.addEventListener('click', function () {
+          openPopup(favoritesPopup);
+        });
+      }
+
+      [categoryPopup, favoritesPopup].forEach(function (popup) {
+        var closeButton = popup.querySelector('.luxy-popup-close');
+
+        if (closeButton) {
+          closeButton.addEventListener('click', function () {
+            closePopup(popup);
+          });
+        }
+
+        popup.addEventListener('click', function (event) {
+          if (event.target === popup) {
+            closePopup(popup);
+          }
+        });
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initLuxyPremiumBottomNav);
+    } else {
+      initLuxyPremiumBottomNav();
+    }
+
+    document.addEventListener('shopify:section:load', initLuxyPremiumBottomNav);
+  })();
+
+
+  (function () {
+    function initLuxyHeroCarousel() {
+      var carousel = document.getElementById('luxy-hero-carousel');
+      if (!carousel) return;
+
+      var track = carousel.querySelector('.luxy-hero-carousel__track');
+      var slides = carousel.querySelectorAll('.luxy-hero-carousel__slide');
+      var dots = carousel.querySelectorAll('.luxy-hero-carousel__dots button');
+
+      if (!track || slides.length === 0) return;
+
+      if (carousel.dataset.initialized === 'true') return;
+      carousel.dataset.initialized = 'true';
+
+      var currentIndex = 0;
+      var totalSlides = slides.length;
+      var intervalTime = 3000;
+      var autoplay = null;
+
+      function goToSlide(index) {
+        if (index >= totalSlides) {
+          currentIndex = 0;
+        } else if (index < 0) {
+          currentIndex = totalSlides - 1;
+        } else {
+          currentIndex = index;
+        }
+
+        track.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
+
+        dots.forEach(function (dot) {
+          dot.classList.remove('active');
+        });
+
+        if (dots[currentIndex]) {
+          dots[currentIndex].classList.add('active');
+        }
+      }
+
+      function nextSlide() {
+        goToSlide(currentIndex + 1);
+      }
+
+      function startAutoplay() {
+        stopAutoplay();
+        autoplay = setInterval(nextSlide, intervalTime);
+      }
+
+      function stopAutoplay() {
+        if (autoplay) {
+          clearInterval(autoplay);
+          autoplay = null;
+        }
+      }
+
+      dots.forEach(function (dot, index) {
+        dot.addEventListener('click', function () {
+          goToSlide(index);
+          startAutoplay();
+        });
+      });
+
+      var startX = 0;
+      var endX = 0;
+
+      carousel.addEventListener('touchstart', function (event) {
+        startX = event.touches[0].clientX;
+        endX = startX;
+        stopAutoplay();
+      }, { passive: true });
+
+      carousel.addEventListener('touchmove', function (event) {
+        endX = event.touches[0].clientX;
+      }, { passive: true });
+
+      carousel.addEventListener('touchend', function () {
+        var difference = startX - endX;
+
+        if (Math.abs(difference) > 45) {
+          if (difference > 0) {
+            goToSlide(currentIndex + 1);
+          } else {
+            goToSlide(currentIndex - 1);
+          }
+        }
+
+        startAutoplay();
+      });
+
+      carousel.addEventListener('mouseenter', stopAutoplay);
+      carousel.addEventListener('mouseleave', startAutoplay);
+
+      goToSlide(0);
+      startAutoplay();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initLuxyHeroCarousel);
+    } else {
+      initLuxyHeroCarousel();
+    }
+
+    document.addEventListener('shopify:section:load', initLuxyHeroCarousel);
+  })();
+</script></body></html>
